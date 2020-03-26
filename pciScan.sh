@@ -1,10 +1,7 @@
 #!/usr/bin/env bash
-#***************************************************************************************
-# Copyright (c) 2019 Choice Hotels International. All Rights Reserved.
-#***************************************************************************************
 
-#Contact Test OPs for any questions/comments
-# @author alexander_pappas
+#Contact Alexander Pappas for any questions/comments at apappas5@asu.edu
+# @author Alexander Pappas
 
 #This script pulls all logs files from any given file location, scans them for credit card numbers,
 #and reports out which files do or do not have active credit card numbers in them

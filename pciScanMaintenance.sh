@@ -1,10 +1,7 @@
 #!/usr/bin/env bash
-#***************************************************************************************
-# Copyright (c) 2019 Choice Hotels International. All Rights Reserved.
-#***************************************************************************************
 
-#Contact Test OPs for any questions/comments
-# @author alexander_pappas
+#Contact Alexander Pappas for any questions/comments at apappas5@asu.edu
+# @author Alexander Pappas
 
 #This script runs weekly to verify pciScan.sh is properly scanning log files once a day and archiving the
 # result log files older than a week
