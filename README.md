@@ -3,7 +3,7 @@ Includes scripts that can be used to scan data in files and determine if there a
 
 NOTE: The instructions provided here will be for the default setup. Feel free to modify these instructions to fit your system the best!
 
-#System Requirements
+# System Requirements
 - Linux/Unix server with a command-line interface to execute bash commands
 - A directory with at least 1 file to be scanned
 - A user set up with proper access to location of files to scan
