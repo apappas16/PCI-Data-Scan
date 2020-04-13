@@ -1,24 +1,25 @@
 #!/usr/bin/env bash
-#***************************************************************************************
-# Copyright (c) 2019 Choice Hotels International. All Rights Reserved.
-#***************************************************************************************
 
-#Contact Test OPs for any questions/comments
-# @author alexander_pappas
+# Contact Alexander Pappas for any questions/comments at apappas5@asu.edu
+# @author Alexander Pappas
 
-#This script runs weekly to verify pciScan.sh is properly scanning log files once a day and archiving the
-# result log files older than a week
+# This script runs on a given schedule to verify pciScan.sh is properly scanning log files once a day and archiving the
+# resulting log files older than a week (NOTE: this can be modified to archive files older than any date that the
+# owner specifies)
+
+# TODO figure out generic location for where the report log files are stored
 
 validated="false"
 emailList=$1
+archiveLocation=$2
 
 function displayInstructions() {
   echo "*******************************************************************"
   echo "SYNOPSIS"
-  echo "  pciScanMaintenance.sh [EMAIL_LIST]"
+  echo "  pciScanMaintenance.sh [EMAIL_LIST] [ARCHIVE_LOCATION]"
   echo ""
   echo "DESCRIPTION"
-  echo " pciScanMaintenance.sh verifies that the pciScan.sh script has been runninng daily over the last week."
+  echo " pciScanMaintenance.sh verifies that the pciScan.sh script has been running daily every week."
   echo " It also archives the log result files that are older than a week."
   echo " The archived files go into the 'archive' folder in the same directory."
   echo ""
@@ -26,8 +27,8 @@ function displayInstructions() {
   echo ""
   echo "EXAMPLES:"
   echo "Shedule run with cron:   call 'crontab -e' type 'i' to insert new text."
-  echo " Type '0 1 * * 1 ~/bin/pciScanMaintenance.sh John.Smith@choicehotels.com'"
-  echo " '0 1 * * 1' tells cron to execute the script at 1AM every Monday. This can be adjusted to whatever the user wants."
+  echo " Type '0 1 * * 1 ~/bin/pciScanMaintenance.sh John.Smith@email.com'"
+  echo " '0 1 * * 1' tells cron to execute the script at 1AM every Monday. This can be adjusted based on preference."
   echo "*******************************************************************"
 }
 
@@ -42,8 +43,8 @@ function verifyPciScanIsRunning() {
 }
 
 function archiveOldLogFiles() {
-  echo "Archiving Old Log Files..."
-  find ~/bin/*.log -mtime +7 -exec cp {} ~/bin/archive \; -delete
+  echo "Archiving old log files..."
+  find ~/bin/*.log -mtime +7 -exec cp {} ~/"$1" \; -delete
 }
 
 function mailMaintenanceReport() {
@@ -64,12 +65,13 @@ if [ -z "$emailList" ]; then
 fi
 
 #check if archive directory needs to be made
-if [ ! -d "$HOME/bin/archive" ]; then
+# shellcheck disable=SC2027
+if [ ! -d "$HOME/$archiveLocation" ]; then
   echo "Creating archive Directory..."
   mkdir archive
 fi
 
-archiveOldLogFiles
+archiveOldLogFiles "$archiveLocation"
 verifyPciScanIsRunning
 mailMaintenanceReport "$emailList"
 echo "Maintenance Scan Complete"
