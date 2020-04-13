@@ -76,7 +76,7 @@ function scanDirectory() {
 
   find $tempDirectory -type f | while read -r fileName; do
     #13 Digit Visa Scan
-    if grep -E -n '[^\.]\b4[0-9]{12}\b(?![\]])' "$fileName" >>"$pciScanReport"; then
+    if grep -E -n '\b[]\b4[0-9]{12}\b(?![\]])' "$fileName" >>"$pciScanReport"; then
       sed -i -E 's/\b4[0-9]{8}/*********/g' "$pciScanReport"
       echo -e "[LOG_ERROR] 13 Digit Visa Data In File: " "$fileName\n\n" >>"$pciScanReport"
     else
